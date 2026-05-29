@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, Suspense, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,7 @@ import { AuthCard } from '@/components/site/auth-card';
 import { useAuth } from '@/lib/auth-context';
 import type { ApiError } from '@/lib/client-api';
 
-export default function LoginPage() {
+function LoginPageContent() {
   const router = useRouter();
   const params = useSearchParams();
   const next = params.get('next');
@@ -79,5 +79,17 @@ export default function LoginPage() {
         </Button>
       </form>
     </AuthCard>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-emerald_deep-700 text-ivory-50">
+        Signing in...
+      </div>
+    }>
+      <LoginPageContent />
+    </Suspense>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -13,7 +13,7 @@ import { apiFetch } from '@/lib/client-api';
 import { formatRwf } from '@/lib/utils';
 import { EVENT_TYPE_LABEL, type Booking } from '@/lib/booking-types';
 
-export default function MyBookingsPage() {
+function MyBookingsPageContent() {
   const router = useRouter();
   const params = useSearchParams();
   const justCreated = params.get('just') === 'created';
@@ -174,5 +174,19 @@ export default function MyBookingsPage() {
         )}
       </div>
     </PageShell>
+  );
+}
+
+export default function MyBookingsPage() {
+  return (
+    <Suspense fallback={
+      <PageShell>
+        <div className="container py-20 flex justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-emerald_deep-700/50" />
+        </div>
+      </PageShell>
+    }>
+      <MyBookingsPageContent />
+    </Suspense>
   );
 }

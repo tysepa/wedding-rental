@@ -74,7 +74,7 @@ export default function GalleryPage() {
   }
 
   return (
-    <PageShell alwaysSolid>
+    <PageShell>
       <section className="container py-14 md:py-20">
         {/* Header */}
         <motion.div

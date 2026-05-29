@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Check, Loader2, X } from 'lucide-react';
 import { AdminShell } from '@/components/admin/admin-shell';
@@ -18,7 +18,7 @@ const FILTERS: Array<{ value: '' | BookingStatus; label: string }> = [
   { value: 'COMPLETED', label: 'Completed' },
 ];
 
-export default function AdminBookingsPage() {
+function AdminBookingsPageContent() {
   const params = useSearchParams();
   const initial = (params.get('status') as BookingStatus | null) ?? '';
   const [filter, setFilter] = useState<'' | BookingStatus>(initial);
@@ -191,5 +191,19 @@ export default function AdminBookingsPage() {
         </ul>
       )}
     </AdminShell>
+  );
+}
+
+export default function AdminBookingsPage() {
+  return (
+    <Suspense fallback={
+      <AdminShell>
+        <div className="mt-12 flex justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-emerald_deep-700/50" />
+        </div>
+      </AdminShell>
+    }>
+      <AdminBookingsPageContent />
+    </Suspense>
   );
 }

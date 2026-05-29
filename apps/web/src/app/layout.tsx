@@ -20,6 +20,12 @@ export const metadata: Metadata = {
   title: 'Bridal Belle Boutique — Rwandan Wedding Rentals',
   description:
     'Rent every piece of your Rwandan wedding — from umushanana and modern gowns to cars, décor, and catering. Made for Gusaba, Gukwa, civil, religious, and reception.',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Bridal Belle',
+  },
   openGraph: {
     title: 'Bridal Belle Boutique',
     description: 'Wedding rentals for every Rwandan ceremony.',
